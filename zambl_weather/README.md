@@ -4,6 +4,13 @@ A new Flutter project.
 
 ## Getting Started
 
+Library used:
+-JSON Annotation Library
+
+Dev Library used:
+-Build_Runner
+-JSON serializable
+
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
