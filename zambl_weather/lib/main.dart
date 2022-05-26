@@ -61,12 +61,46 @@ class _MyAppState extends State<MyApp> {
               ],
             ),
           ),
+          bottomNavigationBar: (
+          ElevatedButton(
+            child: const Text('Saved cities'),
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PreferredList()),);
+            }
+          )
+          ),
         ));
   }
+
+
 
   void _search() async {
     final response = await _repo.getWeather(_cityTextController.text);
     print(_repo.getWeather(_cityTextController.text));
     setState(() => _response = response);
+  }
+}
+
+class PreferredList extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Saved Cities'),
+      ),
+      body: Center(
+
+      ),
+      bottomNavigationBar:(
+        ElevatedButton(
+        child: const Text('Back'),
+        onPressed: (){
+
+      }
+    )
+    ));
   }
 }
