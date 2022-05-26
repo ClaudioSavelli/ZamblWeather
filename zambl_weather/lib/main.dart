@@ -5,12 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:zambl_weather/Models.dart';
 import 'package:zambl_weather/server_communication_controller.dart';
 
+import 'package:zambl_weather/shared_preferences.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MaterialApp(
+    title: 'ZamblWeather',
+      home: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   State<StatefulWidget> createState() => _MyAppState();
 }
@@ -18,6 +24,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final _cityTextController = TextEditingController();
   final _repo = ServerCommunicationController();
+  final sharedPreferences = sharedPreferencesController();
+
 
   ServerResponse? _response;
 
@@ -57,7 +65,9 @@ class _MyAppState extends State<MyApp> {
                         textAlign: TextAlign.center),
                   ),
                 ),
-                ElevatedButton(onPressed: _search, child: Text('Search'))
+                ElevatedButton(onPressed: _search, child: Text('Search')),
+                if(_response!=null)
+                ElevatedButton(onPressed: () => sharedPreferences.save(_response!.city.toString()), child: Text('Save'))
               ],
             ),
           ),
@@ -74,8 +84,6 @@ class _MyAppState extends State<MyApp> {
         ));
   }
 
-
-
   void _search() async {
     final response = await _repo.getWeather(_cityTextController.text);
     print(_repo.getWeather(_cityTextController.text));
@@ -84,23 +92,21 @@ class _MyAppState extends State<MyApp> {
 }
 
 class PreferredList extends StatelessWidget {
+  const PreferredList({super.key});
+
 
   @override
   Widget build(BuildContext context) {
+    final sharedPreferences = sharedPreferencesController();
+    Future<List<String>?> data = sharedPreferences.get();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Saved Cities'),
       ),
       body: Center(
+          child: Column(
 
-      ),
-      bottomNavigationBar:(
-        ElevatedButton(
-        child: const Text('Back'),
-        onPressed: (){
-
-      }
-    )
-    ));
+      )));
   }
 }
