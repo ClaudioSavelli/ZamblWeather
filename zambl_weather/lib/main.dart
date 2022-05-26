@@ -67,13 +67,13 @@ class _MyAppState extends State<MyApp> {
                 ),
                 ElevatedButton(onPressed: _search, child: Text('Search')),
                 if(_response!=null)
-                ElevatedButton(onPressed: () => sharedPreferences.save(_response!.city.toString()), child: Text('Save'))
+                ElevatedButton(onPressed: () => sharedPreferences.save(_response!.city.toString()), child: Text('Add to favourites'))
               ],
             ),
           ),
           bottomNavigationBar: (
           ElevatedButton(
-            child: const Text('Saved cities'),
+            child: const Text('Favourite cities'),
             onPressed: (){
               Navigator.push(
                 context,
@@ -98,15 +98,20 @@ class PreferredList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sharedPreferences = sharedPreferencesController();
-    Future<List<String>?> data = sharedPreferences.get();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Saved Cities'),
-      ),
-      body: Center(
-          child: Column(
-
-      )));
+    return FutureBuilder(
+    future: Future.wait([
+      sharedPreferences.get()
+    ]),
+    builder: (context, response) {
+    if (response.connectionState == ConnectionState.done) {
+    if (response.data != null) {
+    final rep = response.data as List<dynamic>;
+    print(rep[0] as List<String>);
+    }
+    }
+    return const Text("Saved Cities");
+    });
+    // List<UserModel>? userList = await UserInterestsService.getUsersWithTags([Tag("Music")]);
   }
 }

@@ -7,8 +7,10 @@ class sharedPreferencesController{
     final prefs = await SharedPreferences.getInstance();
     var data = prefs.getStringList(name);
     if(data != null){
-      data.add(value);
-      await prefs.setStringList(name, data);
+      if(!data.contains(value)){
+        data.add(value);
+        await prefs.setStringList(name, data);
+      }
     } else {
       await prefs.setStringList(name, <String>[value]);
     }
