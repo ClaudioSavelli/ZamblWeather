@@ -1,11 +1,10 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zambl_weather/Models.dart';
-import 'package:zambl_weather/server_communication_controller.dart';
+import 'package:zambl_weather/controllers/server_communication_controller.dart';
 
-import 'package:zambl_weather/shared_preferences.dart';
+import 'package:zambl_weather/controllers/shared_preferences_controller.dart';
+import 'package:zambl_weather/models/server/current_weather_response.dart';
+import 'package:zambl_weather/utils/date_converter.dart';
+
 
 void main() {
   runApp(const MaterialApp(
@@ -23,11 +22,11 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _cityTextController = TextEditingController();
-  final _repo = ServerCommunicationController();
-  final sharedPreferences = sharedPreferencesController();
+  final _serverController = ServerCommunicationController();
+  final sharedPreferences = SharedPreferencesController();
 
 
-  ServerResponse? _response;
+  CurrentWeatherResponse? _response;
 
 
 
@@ -46,7 +45,7 @@ class _MyAppState extends State<MyApp> {
                       style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)
                       ),
 
-                      Image.network(_response!.iconUrl),
+                      Image.network(_response!.weather.iconUrl),
                       Text(_response!.weather.description,
                            style: TextStyle(fontSize: 45),),
                       Text(
@@ -85,8 +84,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _search() async {
-    final response = await _repo.getWeather(_cityTextController.text);
-    print(_repo.getWeather(_cityTextController.text));
+    final forecast = await _serverController.getForecastWeather(_cityTextController.text);
+    final response = await _serverController.getCurrentWeather(_cityTextController.text);
     setState(() => _response = response);
   }
 }
@@ -97,7 +96,7 @@ class PreferredList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sharedPreferences = sharedPreferencesController();
+    final sharedPreferences = SharedPreferencesController();
 
     return FutureBuilder(
     future: Future.wait([

@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class sharedPreferencesController{
+class SharedPreferencesController{
   String name = 'Saved cities';
 
    void save(String value) async {
