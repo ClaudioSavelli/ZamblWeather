@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zambl_weather/models/server/current_weather_response.dart';
+import 'package:zambl_weather/widgets/empty_widget.dart';
 
 /// Widget used to show the current weather with an add button (for the favorite)
 class CurrentWeatherBloc extends StatelessWidget {
@@ -28,7 +29,7 @@ class CurrentWeatherBloc extends StatelessWidget {
                 response!.weather.description,
                 style: const TextStyle(fontSize: 20),),
               Text(
-                response!.temp.temperature.toString() + " °C",
+                response!.temp.toString(),
                 style: const TextStyle(fontSize: 20),),
               //IconButton(onPressed: onAddClick, icon: const Icon(Icons.add))
               _AddButton()
@@ -44,7 +45,6 @@ class CurrentWeatherBloc extends StatelessWidget {
     if (onAddClick != null) {
       return ElevatedButton(onPressed: onAddClick, child: const Text("Save"));
     }
-    // equivalent
-    return const SizedBox.shrink();
+    return const EmptyWidget();
   }
 }

@@ -112,6 +112,5 @@ class PreferredList extends StatelessWidget {
     }
     return const Text("Saved Cities");
     });
-    // List<UserModel>? userList = await UserInterestsService.getUsersWithTags([Tag("Music")]);
   }
 }

@@ -12,4 +12,9 @@ class Temperature {
     }
     return Temperature(temperature: temperature);
   }
+
+  @override
+  String toString() {
+    return temperature.toString() + " °C";
+  }
 }
