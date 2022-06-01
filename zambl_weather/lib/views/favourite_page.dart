@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:zambl_weather/controllers/server_communication_controller.dart';
 import 'package:zambl_weather/controllers/shared_preferences_controller.dart';
-import 'package:zambl_weather/views/components/city_item.dart';
 import 'package:zambl_weather/views/detail_page.dart';
 import 'package:zambl_weather/widgets/app_scaffold.dart';
 import 'package:zambl_weather/widgets/empty_widget.dart';
+import 'package:zambl_weather/views/components/city_item.dart';
 import 'package:zambl_weather/widgets/tip.dart';
 
 class FavouritePage extends StatefulWidget {

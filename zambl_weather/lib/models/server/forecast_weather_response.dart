@@ -31,7 +31,6 @@ class ForecastWeatherResponse {
     forecast.forEach((datetime, value) {
       // If the datetime is tomorrow
       if (datetime.difference(today).inDays == 1) {
-        print("Coucou");
         mapWeatherTemp.addEntries([MapEntry(datetime, value)]);
       }
     });
