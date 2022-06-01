@@ -51,7 +51,6 @@ class _FavouritePage extends State<FavouritePage> {
   }
 
   Widget _listOfCities(List<String> cityList) {
-    // TODO : a better way to set the height
     return Container(
       width: MediaQuery.of(context).size.width - 50,
       padding: const EdgeInsets.symmetric(vertical: 10),

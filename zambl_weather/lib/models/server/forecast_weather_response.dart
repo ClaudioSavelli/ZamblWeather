@@ -43,7 +43,6 @@ class ForecastWeatherResponse {
     Map<DateTime, Map<Weather, Temperature>> mapWeatherTemp = {};
     forecast.forEach((datetime, value) {
       if (datetime.difference(today).inDays <= 5 && datetime.difference(today).inDays > 0) {
-        // TODO : check if the hours are the same everytime
         if (datetime.hour == 10 || datetime.hour == 16) {
           mapWeatherTemp.addEntries([MapEntry(datetime, value)]);
         }
