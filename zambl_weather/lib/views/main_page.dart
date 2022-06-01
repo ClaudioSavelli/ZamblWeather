@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:zambl_weather/controllers/server_communication_controller.dart';
 import 'package:zambl_weather/controllers/shared_preferences_controller.dart';
 import 'package:zambl_weather/models/server/current_weather_response.dart';
-import 'package:zambl_weather/models/server/forecast_weather_response.dart';
 import 'package:zambl_weather/views/components/current_weather_bloc.dart';
-import 'package:zambl_weather/views/favorite_page.dart';
+import 'package:zambl_weather/views/favourite_page.dart';
 import 'package:zambl_weather/widgets/app_scaffold.dart';
 
 class MainPage extends StatefulWidget {
@@ -27,17 +26,21 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _search() async {
-    final forecast = await _serverController.getForecastWeather(_cityTextController.text);
+    const snackbar = SnackBar(content: Text("Searching"));
+    ScaffoldMessenger.of(context).showSnackBar(snackbar);
     final response = await _serverController.getCurrentWeather(_cityTextController.text);
+    ScaffoldMessenger.of(context).clearSnackBars();
     setState(() => _response = response);
   }
 
   void _saveCity() {
+    const snackbar = SnackBar(content: Text("City saved"));
+    ScaffoldMessenger.of(context).showSnackBar(snackbar);
     sharedPreferences.save(_response!.city.toString());
   }
 
   void _goToFavoritePage() {
-    Navigator.push(context, MaterialPageRoute<void>(builder: (BuildContext context) => const FavoritePage()));
+    Navigator.push(context, MaterialPageRoute<void>(builder: (BuildContext context) => const FavouritePage()));
   }
 
   @override
@@ -60,9 +63,9 @@ class _MainPageState extends State<MainPage> {
                 label: const Text("City")
             ),
           ),
-          OutlinedButton(onPressed: _search, child: const Text("Search")),
+          OutlinedButton(onPressed: _search, child: const Text("Search", style: TextStyle(fontSize: 15))),
           CurrentWeatherBloc(response: _response, onAddClick: _saveCity,),
-          OutlinedButton(onPressed: _goToFavoritePage, child: const Text("Favourite Cities"))
+          OutlinedButton(onPressed: _goToFavoritePage, child: const Text("Go to saved cities", style: TextStyle(fontSize: 20),))
         ],
       ),
     ));

@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 
 class AppScaffold extends StatelessWidget {
   final Widget body;
-  const AppScaffold({Key? key, required this.body}) : super(key: key);
+  final String title;
+  const AppScaffold({Key? key, required this.body, this.title = "ZamblWeather"}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("ZamblWeather"), automaticallyImplyLeading: true,),
+      appBar: AppBar(
+        title: Text(title),
+        automaticallyImplyLeading: true,
+      ),
       body: body,
     );
   }

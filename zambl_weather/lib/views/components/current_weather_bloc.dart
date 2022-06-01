@@ -22,6 +22,8 @@ class CurrentWeatherBloc extends StatelessWidget {
             children: [
               Text(
                 response!.city,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 30),
               ),
               Image.network(response!.weather.iconUrl),
@@ -43,7 +45,7 @@ class CurrentWeatherBloc extends StatelessWidget {
 
   Widget _AddButton() {
     if (onAddClick != null) {
-      return ElevatedButton(onPressed: onAddClick, child: const Text("Save"));
+      return ElevatedButton(onPressed: onAddClick, child: const Text("Save", style: TextStyle(fontSize: 15)));
     }
     return const EmptyWidget();
   }

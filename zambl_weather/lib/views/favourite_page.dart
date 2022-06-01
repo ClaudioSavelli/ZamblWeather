@@ -5,15 +5,16 @@ import 'package:zambl_weather/views/components/city_item.dart';
 import 'package:zambl_weather/views/detail_page.dart';
 import 'package:zambl_weather/widgets/app_scaffold.dart';
 import 'package:zambl_weather/widgets/empty_widget.dart';
+import 'package:zambl_weather/widgets/tip.dart';
 
-class FavoritePage extends StatefulWidget {
-  const FavoritePage({Key? key}) : super(key: key);
+class FavouritePage extends StatefulWidget {
+  const FavouritePage({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _FavoritePage();
+  State<StatefulWidget> createState() => _FavouritePage();
 }
 
-class _FavoritePage extends State<FavoritePage> {
+class _FavouritePage extends State<FavouritePage> {
   final sharedPreferences = SharedPreferencesController();
   final _serverController = ServerCommunicationController();
 
@@ -23,26 +24,29 @@ class _FavoritePage extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(body: Center(
-        child: Column(
-          children: [
-            FutureBuilder(
-              future: Future.wait([
-                sharedPreferences.get()
-              ]),
-              builder: (context, response) {
-                if (response.connectionState == ConnectionState.done) {
-                  if (response.data != null) {
-                    final rep = response.data as List<dynamic>;
-                    final cityList = rep[0] as List<String>;
-                    return _listOfCities(cityList);
+    return AppScaffold(
+      title: "Saved Cities",
+        body: Center(
+          child: Column(
+            children: [
+              FutureBuilder(
+                future: Future.wait([
+                  sharedPreferences.get()
+                ]),
+                builder: (context, response) {
+                  if (response.connectionState == ConnectionState.done) {
+                    if (response.data != null) {
+                      final rep = response.data as List<dynamic>;
+                      final cityList = rep[0] as List<String>;
+                      return _listOfCities(cityList);
+                    }
                   }
+                  return const EmptyWidget();
                 }
-                return const EmptyWidget();
-              }
-            )
-          ],
-        )
+              ),
+              const Tip(text: "Click on a item of the list to see the weather details")
+            ],
+          )
     ));
   }
 
@@ -51,7 +55,7 @@ class _FavoritePage extends State<FavoritePage> {
     return Container(
       width: MediaQuery.of(context).size.width - 50,
       padding: const EdgeInsets.symmetric(vertical: 10),
-      height: MediaQuery.of(context).size.height - 100,
+      height: MediaQuery.of(context).size.height - 150,
       child: ListView.builder(
         itemCount: cityList.length,
         itemBuilder: (context, index) {

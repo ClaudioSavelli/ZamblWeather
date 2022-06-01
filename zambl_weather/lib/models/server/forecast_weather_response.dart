@@ -6,8 +6,6 @@ class ForecastWeatherResponse {
   final String city;
   final Map<DateTime, Map<Weather, Temperature>> forecast;
 
-
-
   ForecastWeatherResponse({required this.city, required this.forecast});
 
   factory ForecastWeatherResponse.fromJson(Map<String, dynamic> json) {
@@ -24,5 +22,33 @@ class ForecastWeatherResponse {
     }
 
     return ForecastWeatherResponse(city : city, forecast : forecast);
+  }
+
+  /// Return the map of Datetime : (Weather: Temperature) for the next 24 hours
+  Map<DateTime, Map<Weather, Temperature>> getWeatherOfNext24H() {
+    final today = DateTime.now();
+    Map<DateTime, Map<Weather, Temperature>> mapWeatherTemp = {};
+    forecast.forEach((datetime, value) {
+      // If the datetime is tomorrow
+      if (datetime.difference(today).inDays == 1) {
+        print("Coucou");
+        mapWeatherTemp.addEntries([MapEntry(datetime, value)]);
+      }
+    });
+    return mapWeatherTemp;
+  }
+
+  Map<DateTime, Map<Weather, Temperature>> getWeatherOfNext5Days() {
+    final today = DateTime.now();
+    Map<DateTime, Map<Weather, Temperature>> mapWeatherTemp = {};
+    forecast.forEach((datetime, value) {
+      if (datetime.difference(today).inDays <= 5 && datetime.difference(today).inDays > 0) {
+        // TODO : check if the hours are the same everytime
+        if (datetime.hour == 10 || datetime.hour == 16) {
+          mapWeatherTemp.addEntries([MapEntry(datetime, value)]);
+        }
+      }
+    });
+    return mapWeatherTemp;
   }
 }
