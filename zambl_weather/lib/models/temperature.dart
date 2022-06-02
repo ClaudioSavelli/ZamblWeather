@@ -15,6 +15,6 @@ class Temperature {
 
   @override
   String toString() {
-    return temperature.toString() + " °C";
+    return (temperature.toString().padRight(5, "0") + " °C");
   }
 }

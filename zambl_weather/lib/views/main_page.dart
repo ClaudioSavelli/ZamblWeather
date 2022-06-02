@@ -17,6 +17,7 @@ class _MainPageState extends State<MainPage> {
   final _cityTextController = TextEditingController();
   final _serverController = ServerCommunicationController();
   final sharedPreferences = SharedPreferencesController();
+  void Function()? _funcSaveButton = null;
   CurrentWeatherResponse? _response;
 
   void _clearSearchBar() {
@@ -30,13 +31,21 @@ class _MainPageState extends State<MainPage> {
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
     final response = await _serverController.getCurrentWeather(_cityTextController.text);
     ScaffoldMessenger.of(context).clearSnackBars();
-    setState(() => _response = response);
+    setState(() {
+      _response = response;
+      _funcSaveButton = _saveCity;
+      print("Plus null");
+    });
   }
 
   void _saveCity() {
     const snackbar = SnackBar(content: Text("City saved"));
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
     sharedPreferences.save(_response!.city.toString());
+    setState(() {
+      print("null");
+      _funcSaveButton = null;
+    });
   }
 
   void _goToFavoritePage() {
@@ -64,7 +73,7 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           OutlinedButton(onPressed: _search, child: const Text("Search", style: TextStyle(fontSize: 15))),
-          CurrentWeatherBloc(response: _response, onAddClick: _saveCity,),
+          CurrentWeatherBloc(response: _response, onSaveClick: _funcSaveButton,),
           OutlinedButton(onPressed: _goToFavoritePage, child: const Text("Go to saved cities", style: TextStyle(fontSize: 20),))
         ],
       ),

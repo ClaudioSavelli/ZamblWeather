@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:zambl_weather/models/server/current_weather_response.dart';
 
 class CityItem extends StatelessWidget {
   final String cityName;
   final CurrentWeatherResponse response;
   final Function(String)? onClick;
-  const CityItem({Key? key, required this.cityName, this.onClick, required this.response}) : super(key: key);
+  final Function(String)? onRemoveButton;
+  const CityItem({Key? key, required this.cityName, this.onClick, required this.response, this.onRemoveButton}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,22 @@ class CityItem extends StatelessWidget {
                 title: Text(cityName,),
                 leading: Image.network(response.weather.iconUrl),
                 subtitle: Text(response.weather.description),
-                trailing: Text(response.temp.toString()),
+                trailing: Container(
+                  width: 105,
+                  child: Row(
+                    children: [
+                      Text(response.temp.toString()),
+                      IconButton(
+                          onPressed: () {
+                            if (onRemoveButton != null) {
+                              onRemoveButton!(cityName);
+                            }
+                          },
+                          icon: const Icon(Icons.delete_outline)
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
           onTap: () {

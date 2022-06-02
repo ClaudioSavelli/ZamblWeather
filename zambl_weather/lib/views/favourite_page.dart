@@ -22,6 +22,15 @@ class _FavouritePage extends State<FavouritePage> {
     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => DetailPage(cityName: cityName)));
   }
 
+  /// Remove the city from the shared preference
+  /// If set, the list of cities can also be directly updated (
+  /// in the case of dismissible items)
+  void _removeCity(String city) {
+    setState((){
+      sharedPreferences.remove(city);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
@@ -44,7 +53,7 @@ class _FavouritePage extends State<FavouritePage> {
                   return const EmptyWidget();
                 }
               ),
-              const Tip(text: "Click on a item of the list to see the weather details")
+              const Tip(text: "Tip : Click on a item of the list to see the weather details")
             ],
           )
     ));
@@ -59,19 +68,25 @@ class _FavouritePage extends State<FavouritePage> {
         itemCount: cityList.length,
         itemBuilder: (context, index) {
           final item = cityList[index];
-          return FutureBuilder(
-            future: Future.wait([
-              _serverController.getCurrentWeather(item)
-            ]),
-            builder: (context, response) {
-              if (response.connectionState == ConnectionState.done) {
-                if (response.data != null) {
-                  final rep = (response.data as List<dynamic>);
-                  return CityItem(cityName: item, response: rep[0], onClick: _loadDetails,);
-                }
-              }
-              return const EmptyWidget();
+          return Dismissible(
+            key: ValueKey<String>(cityList[index]),
+            onDismissed: (DismissDirection direction) {
+              _removeCity(item);
             },
+            child: FutureBuilder(
+              future: Future.wait([
+                _serverController.getCurrentWeather(item)
+              ]),
+              builder: (context, response) {
+                if (response.connectionState == ConnectionState.done) {
+                  if (response.data != null) {
+                    final rep = (response.data as List<dynamic>);
+                    return CityItem(cityName: item, response: rep[0], onClick: _loadDetails, onRemoveButton: _removeCity,);
+                  }
+                }
+                return const EmptyWidget();
+              },
+            ),
           );
         },
       ),
