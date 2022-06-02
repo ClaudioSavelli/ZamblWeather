@@ -8,12 +8,12 @@ class WeekWeatherWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final map = forecast.getWeatherOfNext5Days();
+    final map = forecast.getWeatherOfNext4Days();
     return Column(
       children: [
         const Padding(
           padding: EdgeInsets.all(8.0),
-          child: Text("Next 5 days :", style: TextStyle(fontSize: 20),),
+          child: Text("Next 4 days :", style: TextStyle(fontSize: 20),),
         ),
         Container(
           width: MediaQuery.of(context).size.width - 20,

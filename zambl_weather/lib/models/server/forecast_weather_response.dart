@@ -37,7 +37,7 @@ class ForecastWeatherResponse {
     return mapWeatherTemp;
   }
 
-  Map<DateTime, Map<Weather, Temperature>> getWeatherOfNext5Days() {
+  Map<DateTime, Map<Weather, Temperature>> getWeatherOfNext4Days() {
     final today = DateTime.now();
     Map<DateTime, Map<Weather, Temperature>> mapWeatherTemp = {};
     forecast.forEach((datetime, value) {
