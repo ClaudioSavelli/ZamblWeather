@@ -14,15 +14,6 @@ class CurrentWeatherBloc extends StatefulWidget {
 }
 
 class _CurrentWeatherBlocState extends State<CurrentWeatherBloc> {
-  bool _isAlreadySaved = false;
-  
-  void _saveCity() {
-    widget.onSaveClick;
-    setState((){
-      _isAlreadySaved = true;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     if (widget.response != null) {
