@@ -37,6 +37,8 @@ class ForecastWeatherResponse {
     return mapWeatherTemp;
   }
 
+  // Return the map of Datetime : (Weather: Temperature) of the morning (10h)
+  // and afternoon (16h) of the next 4 days
   Map<DateTime, Map<Weather, Temperature>> getWeatherOfNext4Days() {
     final today = DateTime.now();
     Map<DateTime, Map<Weather, Temperature>> mapWeatherTemp = {};
