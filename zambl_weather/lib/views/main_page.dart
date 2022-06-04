@@ -72,9 +72,14 @@ class _MainPageState extends State<MainPage> {
                 label: const Text("City")
             ),
           ),
-          OutlinedButton(onPressed: _search, child: const Text("Search", style: TextStyle(fontSize: 15))),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              OutlinedButton(onPressed: _search, child: const Text("Search", style: TextStyle(fontSize: 15))),
+              OutlinedButton(onPressed: _goToFavoritePage, child: const Text("Go to saved cities", style: TextStyle(fontSize: 15),))
+            ],
+          ),
           CurrentWeatherBloc(response: _response, onSaveClick: _funcSaveButton,),
-          OutlinedButton(onPressed: _goToFavoritePage, child: const Text("Go to saved cities", style: TextStyle(fontSize: 20),))
         ],
       ),
     ));

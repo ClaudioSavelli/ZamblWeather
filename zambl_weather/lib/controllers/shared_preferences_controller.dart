@@ -19,7 +19,6 @@ class SharedPreferencesController{
     } else {
       await prefs.setStringList(name, <String>[value]);
     }
-    print(prefs.getStringList(name)?.toList());
   }
 
   Future<List<String>?> get() async {
