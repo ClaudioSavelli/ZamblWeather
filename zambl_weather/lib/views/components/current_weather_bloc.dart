@@ -20,7 +20,7 @@ class _CurrentWeatherBlocState extends State<CurrentWeatherBloc> {
       return Card(
         elevation: 5,
         child: Container(
-          height: MediaQuery.of(context).size.height/3,
+          height: MediaQuery.of(context).size.height/2.5,
           width: MediaQuery.of(context).size.width - 100,
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
           child: Column(

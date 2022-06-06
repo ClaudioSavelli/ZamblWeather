@@ -12,6 +12,7 @@ class AppScaffold extends StatelessWidget {
         title: Text(title),
         automaticallyImplyLeading: true,
       ),
+      resizeToAvoidBottomInset: false,
       body: body,
     );
   }
